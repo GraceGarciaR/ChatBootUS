@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistente UNISA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <h1>Asistente UNISA</h1>
+        <div id="chat-box" class="chat-box">
+            <!-- Mensaje introductorio se mostrará aquí -->
+        </div>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Escribe tu mensaje..." autocomplete="off">
+            <button id="send-btn">➤</button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var userName = ''; // Variable para guardar el nombre del usuario
+
+        // Mostrar mensaje introductorio al cargar el chat
+        /*$(document).ready(function() {
+            $('#chat-box').append('<div class="message bot-message"><div class="avatar bot-avatar">B</div><div class="text">¡Hola! Soy tu asistente. ¿En qué puedo ayudarte hoy?</div></div>');
+            $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);  // Desplazar el chat hacia abajo
+        });*/
+        $(document).ready(function() {
+            $('#chat-box').append('<div class="message bot-message"><div class="avatar bot-avatar"><img src="img/boot.png" width="55" height="55"/></div><div class="text">¡Hola! Soy tu asistente UNISA. <br/> ¿Cúal es tu nombre?</div></div>');
+            $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);  // Desplazar el chat hacia abajo
+        });
+
+        // Función para manejar el envío del mensaje
+        $('#send-btn').click(function() {
+            var userQuestion = $('#user-input').val().trim();
+            if (userQuestion === '') return;
+
+            // Si aún no se ha registrado el nombre del usuario
+            if (userName === '') {
+                // Establecer el nombre del usuario y saludarlo
+                userName = userQuestion;
+                $('#chat-box').append('<div class="message user-message"><div class="avatar user-avatar"><img src="img/user.png" width="30" height="30"/></div><div class="text">Me llamo ' + userName + '.</div></div>');
+                $('#chat-box').append('<div class="message bot-message"><div class="avatar bot-avatar"><img src="img/boot.png" width="55" height="55"/></div><div class="text"> '+ userName + ' ¡Gracias por ponerte en contacto con nosotros! <br/>¿Cómo podemos ayudarte? <br/><br/>Selecciona una de las opciones: </div></div>');
+
+                    // Hacer la solicitud AJAX para obtener la respuesta del chatbot
+                    $.ajax({
+                        url: 'chatbot.php',
+                        type: 'POST',
+                        data: { menu: userQuestion },
+                        success: function(response) {
+                            var data = JSON.parse(response);
+                            $('#chat-box').append('<div class="message bot-message"><div class="avatar bot-avatar"><img src="img/boot.png" width="55" height="55"/></div><div class="text">' + data.answers + '</div></div>');
+                            $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);  // Desplazar el chat hacia abajo
+                        },
+                        error: function() {
+                            $('#chat-box').append('<div class="message bot-message"><div class="avatar bot-avatar"><img src="img/boot.png" width="55" height="55"/></div><div class="text">Hubo un error al procesar tu solicitud.</div></div>');
+                        }
+                    });
+
+            } else {
+                // Mostrar mensaje del usuario
+                $('#chat-box').append('<div class="message user-message"><div class="avatar user-avatar"><img src="img/user.png" width="30" height="30"/></div><div class="text">' + userQuestion + '</div></div>');
+                /*$('#chat-box').append('<div class="message bot-message"><div class="avatar bot-avatar">B</div><div class="text">¡Gracias por tu mensaje, ' + userName + '! ¿Cómo puedo ayudarte?</div></div>');*/
+
+                // Hacer la solicitud AJAX para obtener la respuesta del chatbot
+
+                $.ajax({
+                    url: 'chatbot.php',
+                        type: 'POST',
+                        data: { question: userQuestion },
+                        success: function(response) {
+                            var data = JSON.parse(response);
+                            $('#chat-box').append('<div class="message bot-message"><div class="avatar bot-avatar"><img src="img/boot.png" width="55" height="55"/></div><div class="text">' + data.answer + '</div></div>');
+                            $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);  // Desplazar el chat hacia abajo
+                        },
+                    /*url: 'chatbot.php',
+                    type: 'POST',
+                    data: { question: userQuestion },
+                    success: function(response) {
+                        var data = JSON.parse(response);
+                        $('#chat-box').append('<div class="message bot-message"><div class="avatar bot-avatar"><img src="img/boot.png" width="55" height="55"/></div><div class="text">' +  data.answer + '</div></div>');
+                        $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);  // Desplazar el chat hacia abajo
+                    },*/
+                    error: function() {
+                        $('#chat-box').append('<div class="message bot-message"><div class="avatar bot-avatar"><img src="img/boot.png" width="55" height="55"/></div><div class="text">Hubo un error al procesar tu solicitud.</div></div>');
+                    }
+                });
+            }
+
+            $('#user-input').val('');  // Limpiar el campo de entrada
+            $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);  // Desplazar el chat hacia abajo
+        });
+
+        // Permitir enviar al presionar Enter
+        $('#user-input').keypress(function(event) {
+            if (event.which === 13) {  // Código de la tecla Enter
+                $('#send-btn').click();
+            }
+        });
+    </script>
+</body>
+</html>
+

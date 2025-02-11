@@ -1,0 +1,124 @@
+/* Estilo básico para el chatbot */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f7fc;
+    margin: 0;
+    padding: 0;
+}
+
+.chat-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-box {
+    flex-grow: 1;
+    padding: 10px;
+    height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    flex-direction: row;
+}
+
+.message.bot-message {
+    justify-content: flex-start; /* El mensaje del bot está a la izquierda */
+}
+
+.message.user-message {
+    justify-content: flex-end; /* El mensaje del usuario está a la derecha */
+}
+
+.message div.text {
+    max-width: 80%;
+    padding: 10px;
+    border-radius: 20px;
+    word-wrap: break-word;
+    font-size: 16px;
+    display: inline-block;
+}
+
+.user-message .text {
+    background-color: #d1e7ff;
+    border-top-right-radius: 0;
+}
+
+.bot-message .text {
+    background-color: #e1f5d5;
+    border-top-left-radius: 0;
+}
+
+/* Estilo para avatars fuera del cuadro de mensaje */
+.avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #4CAF50; /* Verde para el usuario */
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.bot-avatar {
+    background-color: #FFFFFF;/*#FF5722; /* Naranja para el bot */
+    margin-left: 10px;
+}
+
+.user-avatar {
+    background-color: #FFFFFF;/*#4CAF50; /* Verde para el usuario */
+    margin-right: 10px;
+}
+
+/* Estilo para el input */
+.input-container {
+    display: flex;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+}
+
+#user-input {
+    width: 80%;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+#send-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+#send-btn:hover {
+    background-color: #45a049;
+}
+
+h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
